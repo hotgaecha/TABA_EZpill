@@ -4,7 +4,7 @@ class Recommendation:
     def __init__(self, survey_id, user_id, preg_week, age, bmi, medication, sea_food_allergy, probiotic_allergy,
                  collagen_allergy, lutein_allergy, diabetes, high_blood_pressure, heart_disease, liver_cirrhosis,
                  rheumatoid_arthritis, obesity, digestive_issues, muscle_twitching, eye_fatigue, skin_condition,
-                 feel_down, pill_preference, budget):
+                 feel_down, pill_preference, budget,result):
         self.survey_id = survey_id
         self.user_id = user_id
         self.preg_week = preg_week
@@ -28,6 +28,7 @@ class Recommendation:
         self.feel_down = feel_down
         self.pill_preference = pill_preference
         self.budget = budget
+        self.result = result
 
     def make_recommend_combination(self):
         pill_list = []
@@ -233,12 +234,41 @@ class Recommendation:
 
         return survey_data
 
+    def save_recommendation_to_database(self, result):
+        # 데이터베이스 연결 정보
+        db_config = {
+            "host": "qqrx224.cgidx97t8k8h.ap-northeast-2.rds.amazonaws.com",
+            "user": "BAEKI",
+            "password": "qoqorlxo1!",
+            "database": "Ezpill"
+        }
+
+        # 데이터베이스 연결
+        conn = mysql.connector.connect(**db_config)
+        cursor = conn.cursor()
+
+        # 결과 값을 데이터베이스에 업데이트
+        update_query = "UPDATE survey SET result = %s WHERE survey_id = %s"
+        cursor.execute(update_query, (', '.join(result), self.survey_id))
+
+        # 변경사항을 커밋
+        conn.commit()
+
+        # 연결 종료
+        cursor.close()
+        conn.close()
+
+
 if __name__ == "__main__":
     # 설문 데이터 가져오기
     survey_data = Recommendation.get_survey_data()
 
     # Recommendation 인스턴스 생성 및 결과 출력
-    survey_list = [Recommendation(*data) for data in survey_data]
+    survey_list = [Recommendation(*data[:-1], data[-1]) for data in survey_data]
     for survey_instance in survey_list:
         result = survey_instance.make_recommend_combination()
         print(f"User ID {survey_instance.user_id}: {result}")
+
+
+        # 결과를 데이터베이스에 저장
+        survey_instance.save_recommendation_to_database(result)
