@@ -16,6 +16,8 @@ def get_survey():
     preg_week = int(input("임신 주차를 입력하세요: "))
     age = int(input("나이를 입력하세요: "))
     bmi = int(input("임신 전 몸무게(BMI)를 입력하세요: "))
+
+    #나눠줘야함 5가지 필수영야제
     medication = input("현재 복용 중인 영양제가 있나요? (모른다면 엔터): ")
 
     sea_food_allergy = int(input("해산물 알러지가 있나요? (없음:0 , 있음:1): "))
@@ -39,7 +41,7 @@ def get_survey():
     pill_preference = int(input("선호하는 알약의 제형을 입력하세요 (상관없음=0, 알약=1): "))
     budget = int(input("하루 투자 가능 금액을 입력하세요(1000, 2000, 3000): "))
 
-    user_id = 23  # 이 값은 프런트에서 받아와야함.
+    user_id = 26  # 이 값은 프런트에서 받아와야함.
     # 설문 데이터를 DB에 저장
     cursor.execute("""
         UPDATE survey 
