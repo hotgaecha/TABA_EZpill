@@ -87,6 +87,8 @@ class Recommendation:
                 pill_list.append("철분")
             if "칼슘" in self.medication:
                 pill_list.append("칼슘")
+            if "마그네슘" in self.medication:
+                pill_list.append("마그네슘")
 
         # 중복 제거
         pill_list = list(set(pill_list))
@@ -103,13 +105,21 @@ class Recommendation:
                     pill_list.remove("엽산")
                 except ValueError:
                     pass
-            if "항생제(테트라사이클린, 퀴놀론)" in self.medication:
+            if "항생제" in self.medication:
                 try:
                     pill_list.remove("철분")
                 except ValueError:
                     pass
                 try:
                     pill_list.remove("칼슘")
+                except ValueError:
+                    pass
+                try:
+                    pill_list.remove("유산균")
+                except ValueError:
+                    pass
+                try:
+                    pill_list.remove("마그네슘")
                 except ValueError:
                     pass
             if "디곡신" in self.medication:
@@ -122,16 +132,7 @@ class Recommendation:
                     pill_list.remove("칼슘")
                 except ValueError:
                     pass
-            if "항생제" in self.medication:
-                try:
-                    pill_list.remove("마그네슘")
-                except ValueError:
-                    pass
-            if "항생제" in self.medication:
-                try:
-                    pill_list.remove("유산균")
-                except ValueError:
-                    pass
+
             if "이뇨제" in self.medication:
                 try:
                     pill_list.remove("마그네슘")
