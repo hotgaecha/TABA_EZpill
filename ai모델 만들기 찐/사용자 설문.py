@@ -15,7 +15,9 @@ def get_survey():
 
     preg_week = int(input("임신 주차를 입력하세요: "))
     age = int(input("나이를 입력하세요: "))
-    bmi = int(input("임신 전 몸무게(BMI)를 입력하세요: "))
+    height = int(input("키를 입력하세요: ")) / 100
+    weight = int(input("임신 전 몸무게를 입력하세요: "))
+    bmi = int(weight / (height ** 2))
 
     #나눠줘야함 5가지 필수영야제
     medication = input("현재 복용 중인 영양제 또는 약이 있나요? (모른다면 엔터 예시 ->오메가-3, 엽산, 철분, 비타민D, 칼슘, 유산균, 마그네슘, 혈액 희석제, 항경련제, 항생제, 디곡신,비스포스포네이트,이뇨제, 골다공증 치료제  ): ")
@@ -38,10 +40,9 @@ def get_survey():
     skin_condition = int(input("피부의 수분감이나 탄력이 떨어짐을 느끼나요? ( 없음:0 , 있음:1): "))
     feel_down = int(input("몸에 기운이 없거나 신진대사가 떨어짐을 느끼나요? ( 없음:0 , 있음:1): "))
 
-    pill_preference = int(input("선호하는 알약의 제형을 입력하세요 (상관없음=0, 알약=1): "))
     budget = int(input("하루 투자 가능 금액을 입력하세요(1000, 2000, 3000): "))
 
-    user_id = 26  # 이 값은 프런트에서 받아와야함.
+    user_id = 27  # 이 값은 프런트에서 받아와야함.
     # 설문 데이터를 DB에 저장
     cursor.execute("""
         UPDATE survey 
@@ -65,7 +66,6 @@ def get_survey():
             eye_fatigue = %s,
             skin_condition = %s,
             feel_down = %s,
-            pill_preference = %s,
             budget = %s
         WHERE user_id = %s;
     """, (
@@ -88,7 +88,6 @@ def get_survey():
         eye_fatigue,
         skin_condition,
         feel_down,
-        pill_preference,
         budget,
         user_id
     ))

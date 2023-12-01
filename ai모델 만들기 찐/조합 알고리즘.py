@@ -4,7 +4,7 @@ class Recommendation:
     def __init__(self, survey_id, user_id, preg_week, age, bmi, medication, sea_food_allergy, probiotic_allergy,
                  collagen_allergy, lutein_allergy, diabetes, high_blood_pressure, heart_disease, liver_cirrhosis,
                  rheumatoid_arthritis, obesity, digestive_issues, muscle_twitching, eye_fatigue, skin_condition,
-                 feel_down, pill_preference, budget,result):
+                 feel_down,  budget,result):
         self.survey_id = survey_id
         self.user_id = user_id
         self.preg_week = preg_week
@@ -26,7 +26,6 @@ class Recommendation:
         self.eye_fatigue = eye_fatigue
         self.skin_condition = skin_condition
         self.feel_down = feel_down
-        self.pill_preference = pill_preference
         self.budget = budget
         self.result = result
 
@@ -71,9 +70,6 @@ class Recommendation:
 
         if self.feel_down:
             pill_list.append("비타민 B")
-
-        if self.pill_preference == "상관없음":
-            pass
 
 
         # 4. 복용 중인 영양제 처리
@@ -262,6 +258,7 @@ class Recommendation:
 if __name__ == "__main__":
     # 설문 데이터 가져오기
     survey_data = Recommendation.get_survey_data()
+
 
     # Recommendation 인스턴스 생성 및 결과 출력
     survey_list = [Recommendation(*data[:-1], data[-1]) for data in survey_data]
