@@ -9,7 +9,7 @@ db_config = {
     "password": "qoqorlxo1!",
     "database": "Ezpill"
 }
-user_id=26
+user_id=7
 # ...
 
 try:
@@ -122,7 +122,8 @@ def min_cost_combination():
         min_item = None  # 최소 비용을 가지고 있는 아이템 초기화
 
         for j in range(len(result[i])):
-            current_cost = int(result[i][j][1])
+            current_cost = int(str(result[i][j][1]).replace(',', ''))  # 콤마 제거 후 정수로 변환
+
             if current_cost < min_val:
                 min_val = current_cost
                 min_item = result[i][j]
@@ -157,8 +158,8 @@ def cost_up():
         for j in range(len(result[i])):
             temp = cost_up_list[i]
 
-            if int(result[i][j][1]) > max:
-                max = int(result[i][j][1])
+            if int(str(result[i][j][1]).replace(',', '')) > max:
+                max = int(str(result[i][j][1]).replace(',', ''))
                 cost_up_list[i]=max
                 if sum(cost_up_list) < user_budget:
                     max_item = result[i][j]
